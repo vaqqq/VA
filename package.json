@@ -1,0 +1,193 @@
+{
+  "name": "zeiterfassung",
+  "productName": "Zeiterfassung",
+  "version": "1.0.0",
+  "description": "The Krunker Client of enlightenment.",
+  "main": "./.webpack/main",
+  "author": "Vaq",
+  "license": "GNU",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vaqqq/va.git"
+  },
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "eslint --ext .ts,.tsx,.js src",
+    "lint:fix": "eslint --ext .ts,.tsx,.js src --fix",
+    "premake": "node verify-devtools.js",
+    "prepare": "husky install"
+  },
+  "keywords": [
+    "Electron",
+    "bytenode",
+    "compiler",
+    "v8"
+  ],
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "dir": "./src",
+        "asar": false,
+        "icon": "./src/assets/icon.ico",
+        "prune": true,
+        "extraResource": [
+          "./LICENSE.md"
+        ],
+        "ignore": [
+          "/\\.git($|/)",
+          "/node_modules($|/)",
+          "/src($|/)",
+          "/test($|/)",
+          "package-lock.json",
+          "yarn.lock",
+          ".*\\.md",
+          ".*\\.log",
+          ".*\\.map",
+          "/dist($|/)",
+          "/\\.vscode($|/)",
+          "/webpack\\.(main|renderer|preload)\\.config\\.js"
+        ]
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin",
+            "linux"
+          ],
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-dmg",
+          "config": {}
+        },
+        {
+          "name": "@electron-addons/electron-forge-maker-nsis",
+          "config": {}
+        }
+      ],
+      "plugins": [
+        {
+          "name": "@electron-forge/plugin-webpack",
+          "config": {
+            "mainConfig": "./webpack.main.config.js",
+            "renderer": {
+              "config": "./webpack.renderer.config.js",
+              "entryPoints": [
+                {
+                  "html": "./src/renderer/index.html",
+                  "js": "./src/renderer/index.ts",
+                  "name": "main_window",
+                  "preload": {
+                    "config": "webpack.preload.config.js"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  "build": {
+    "appId": "com.zeiterfassung.app",
+    "productName": "Zeiterfassung",
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": false,
+      "license": "./src/build/Agreement.txt",
+      "createDesktopShortcut": true
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "./src/assets/icon.ico"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "./src/assets/icon.ico"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "./src/assets/icon.ico"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "vaqqq",
+        "repo": "va"
+      }
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@electron-forge/cli": "^6.1.0",
+    "@electron-forge/maker-deb": "^6.1.0",
+    "@electron-forge/maker-dmg": "^7.5.0",
+    "@electron-forge/maker-rpm": "^6.1.0",
+    "@electron-forge/maker-squirrel": "^6.1.0",
+    "@electron-forge/maker-zip": "^6.1.0",
+    "@electron-forge/plugin-webpack": "6.1.0",
+    "@electron/asar": "^3.2.3",
+    "@herberttn/bytenode-webpack-plugin": "^2.3.1",
+    "@types/discord-rpc": "^4.0.8",
+    "@types/spotify-web-api-node": "^5.0.11",
+    "@types/tmi.js": "^1.8.6",
+    "@typescript-eslint/eslint-plugin": "^5.57.0",
+    "@typescript-eslint/parser": "^5.57.0",
+    "@vercel/webpack-asset-relocator-loader": "^1.7.3",
+    "autoprefixer": "^10.4.20",
+    "commitlint": "^19.6.1",
+    "commitlint-config-gitmoji": "^2.3.1",
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^6.7.3",
+    "electron": "^10.4.7",
+    "eslint": "^8.37.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "husky": "^8.0.0",
+    "node-loader": "^2.0.0",
+    "postcss": "^8.5.1",
+    "style-loader": "^3.3.2",
+    "tailwindcss": "^3.4.17",
+    "ts-loader": "^9.4.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.2",
+    "url-loader": "^4.1.1"
+  },
+  "dependencies": {
+    "@electron-addons/electron-forge-maker-nsis": "^7.0.2",
+    "@mkody/twitch-emoticons": "^2.9.0",
+    "@twurple/api": "^7.2.1",
+    "@twurple/auth": "^7.2.1",
+    "@twurple/auth-tmi": "^7.2.1",
+    "@twurple/chat": "^7.2.1",
+    "@twurple/eventsub-ws": "^7.2.1",
+    "axios": "^1.7.9",
+    "bytenode": "^1.4.0",
+    "cheerio": "^1.0.0-rc.12",
+    "discord-rpc": "^4.0.1",
+    "dompurify": "^3.2.3",
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-store": "^5.2.0",
+    "electron-updater": "^6.2.1",
+    "express": "^4.21.0",
+    "pidusage": "^3.0.2",
+    "spotify-web-api-node": "^5.0.2",
+    "tmi.js": "^1.8.5"
+  }
+}

@@ -1,0 +1,6 @@
+**/dist
+**/out
+**/.webpack
+**/node_modules
+**/.vscode
+**/*.md

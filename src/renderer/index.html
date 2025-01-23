@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Zeiterfassung Login / Registration</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f3f4f6;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #drag-region {
+        -webkit-app-region: drag;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 40px;
+        background: #5a739b;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+        cursor: move;
+        padding: 0 10px;
+        box-sizing: border-box;
+      }
+
+      .window-buttons {
+        -webkit-app-region: no-drag;
+        display: flex;
+        gap: 10px;
+      }
+
+      .window-button {
+        width: 20px;
+        height: 20px;
+        background: #4b5563;
+        border: none;
+        border-radius: 3px;
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+      }
+
+      .window-button:hover {
+        background: #6b7280;
+      }
+
+      .no-drag {
+        -webkit-app-region: no-drag;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      #toggleButton {
+        color: #3b82f6;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="drag-region">
+      <div>Max's Zeiterfassung</div>
+      <div class="window-buttons">
+        <button id="minimize" class="window-button">_</button>
+        <button id="maximize" class="window-button">▢</button>
+        <button id="close" class="window-button">X</button>
+      </div>
+    </div>
+
+    <div class="bg-white shadow-md rounded-lg w-96 p-8 no-drag">
+      <h2 id="form-title" class="text-2xl font-bold text-center mb-6">
+        Anmelden
+      </h2>
+
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label
+            for="login-username"
+            class="block text-sm font-medium text-gray-700"
+            >Benutzername</label
+          >
+          <input
+            type="text"
+            id="login-username"
+            name="username"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+            placeholder="Füge dein Passwort ein"
+            required
+          />
+        </div>
+        <div>
+          <label
+            for="login-password"
+            class="block text-sm font-medium text-gray-700"
+            >Passwort</label
+          >
+          <input
+            type="password"
+            id="login-password"
+            name="password"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+            placeholder="Füge dein Passwort ein"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700 transition duration-150"
+        >
+          Anmelden
+        </button>
+      </form>
+
+      <form id="registerForm" class="hidden space-y-4">
+        <div>
+          <label
+            for="register-username"
+            class="block text-sm font-medium text-gray-700"
+            >Benutzername</label
+          >
+          <input
+            type="text"
+            id="register-username"
+            name="username"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+            placeholder="Wähle einen Benutzernamen"
+            required
+          />
+        </div>
+        <div>
+          <label
+            for="register-password"
+            class="block text-sm font-medium text-gray-700"
+            >Passwort</label
+          >
+          <input
+            type="password"
+            id="register-password"
+            name="password"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+            placeholder="Wähle ein Passwort"
+            required
+          />
+        </div>
+      </form>
+
+      <form id="registerCompanyForm" class="hidden space-y-4">
+        <div>
+          <label
+            for="company-name"
+            class="block text-sm font-medium text-gray-700"
+            >Firmenname</label
+          >
+          <input
+            type="text"
+            id="company-name"
+            name="companyName"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+            placeholder="Name der Firma"
+            required
+          />
+        </div>
+        <div>
+          <label
+            for="company-image"
+            class="block text-sm font-medium text-gray-700"
+            >Bild-URL</label
+          >
+          <input
+            type="text"
+            id="company-image"
+            name="imageUrl"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+            placeholder="Bild-URL der Firma"
+            required
+          />
+        </div>
+        <div>
+          <label
+            for="admin-username"
+            class="block text-sm font-medium text-gray-700"
+            >Admin Benutzername</label
+          >
+          <input
+            type="text"
+            id="admin-username"
+            name="adminUsername"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+            placeholder="Admin Benutzername"
+            required
+          />
+        </div>
+        <div>
+          <label
+            for="admin-password"
+            class="block text-sm font-medium text-gray-700"
+            >Admin Passwort</label
+          >
+          <input
+            type="password"
+            id="admin-password"
+            name="adminPassword"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+            placeholder="Admin Passwort"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-green-600 text-white p-2 rounded-md hover:bg-green-700 transition duration-150"
+        >
+          Firma registrieren
+        </button>
+      </form>
+
+      <div class="mt-4 text-center">
+        <p id="toggleText" class="text-sm text-gray-600">
+          <span
+            id="toggleButton"
+            class="text-indigo-600 hover:underline cursor-pointer"
+            >Erstelle einen neuen Account</span
+          >
+        </p>
+        <p id="toggleCompanyText" class="text-sm text-gray-600 mt-2">
+          <span
+            id="toggleCompanyButton"
+            class="text-indigo-600 hover:underline cursor-pointer"
+            >Firma registrieren</span
+          >
+        </p>
+      </div>
+    </div>
+
+    <script>
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const registerCompanyForm = document.getElementById(
+        'registerCompanyForm'
+      );
+      const formTitle = document.getElementById('form-title');
+      const toggleButton = document.getElementById('toggleButton');
+      const toggleCompanyButton = document.getElementById(
+        'toggleCompanyButton'
+      );
+
+      toggleButton.addEventListener('click', () => {
+        const isLoginVisible = !loginForm.classList.contains('hidden');
+
+        loginForm.classList.toggle('hidden');
+        registerForm.classList.toggle('hidden');
+
+        formTitle.textContent = isLoginVisible ? 'Registrieren' : 'Anmelden';
+        toggleButton.textContent = isLoginVisible
+          ? 'Anmelden'
+          : 'Erstelle einen neuen Account';
+      });
+
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = document.getElementById('login-username').value;
+        const password = document.getElementById('login-password').value;
+
+        await window.zt.login(username, password);
+      });
+
+      registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = document.getElementById('register-username').value;
+        const password = document.getElementById('register-password').value;
+
+        await window.zt.register(username, password);
+      });
+
+      toggleCompanyButton.addEventListener('click', () => {
+        loginForm.classList.add('hidden');
+        registerForm.classList.add('hidden');
+        registerCompanyForm.classList.remove('hidden');
+        formTitle.textContent = 'Firma registrieren';
+      });
+
+      registerCompanyForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const companyName = document.getElementById('company-name').value;
+        const imageUrl = document.getElementById('company-image').value;
+        const adminUsername = document.getElementById('admin-username').value;
+        const adminPassword = document.getElementById('admin-password').value;
+        await window.zt.registerCompany(
+          companyName,
+          imageUrl,
+          adminUsername,
+          adminPassword
+        );
+      });
+
+      document
+        .getElementById('minimize')
+        .addEventListener('click', () => window.zt.minimize());
+      document
+        .getElementById('maximize')
+        .addEventListener('click', () => window.zt.maximize());
+      document
+        .getElementById('close')
+        .addEventListener('click', () => window.zt.close());
+    </script>
+  </body>
+</html>

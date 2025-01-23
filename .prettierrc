@@ -1,0 +1,14 @@
+{
+  "singleQuote": true,
+  "tabWidth": 2,
+  "useTabs": false,
+  "printWidth": 80,
+  "bracketSpacing": true,
+  "endOfLine": "crlf",
+  "overrides": [
+    {
+      "files": ["*.html"],
+      "options": { "parser": "angular" }
+    }
+  ]
+}
