@@ -1,11 +1,11 @@
 {
   "name": "zeiterfassung",
-  "productName": "Zeiterfassung",
+  "productName": "Max's Zeiterfassung",
   "version": "1.0.0",
   "description": "The Krunker Client of enlightenment.",
   "main": "./.webpack/main",
   "author": "Vaq",
-  "license": "GNU",
+  "license": "GPL-3.0-only",
   "repository": {
     "type": "git",
     "url": "https://github.com/vaqqq/va.git"
@@ -132,7 +132,7 @@
   },
   "build": {
     "appId": "com.zeiterfassung.app",
-    "productName": "Zeiterfassung",
+    "productName": "Max's Zeiterfassung",
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": false,
