@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rapporte</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        padding: 20px;
+        background-color: #f4f4f4;
+      }
+
+      .header {
+        background-color: #1e90ff;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .section {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
+      }
+
+      .section h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+        color: #333;
+      }
+
+      .list-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        padding: 10px 0;
+      }
+
+      .list-item span {
+        font-size: 14px;
+        color: #555;
+      }
+
+      .footer {
+        background-color: #b5b5b5;
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 14px;
+        text-align: center;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">Zeiteinträge der Mitarbeiter</div>
+
+    <div class="content">
+      <div class="section">
+        <h2>Zeiteinträge</h2>
+        <div id="time-entries-list">
+          <p>Zeiteinträge werden geladen...</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">© 2025 Zeiterfassung</div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', loadTimeEntries);
+
+      async function loadTimeEntries() {
+        try {
+          const timeEntries = await window.zt.getTimeEntries();
+          const entriesList = document.getElementById('time-entries-list');
+          entriesList.innerHTML = '';
+
+          if (timeEntries.length === 0) {
+            entriesList.innerHTML = '<p>Keine Zeiteinträge gefunden.</p>';
+            return;
+          }
+
+          timeEntries.forEach((entry) => {
+            const listItem = document.createElement('div');
+            listItem.classList.add('list-item');
+
+            const entryDetails = document.createElement('span');
+            entryDetails.textContent = `
+              Mitarbeiter: ${entry.employee} | Stunden: ${entry.hours} | 
+              Beschreibung: ${entry.description} | Datum: ${new Date(
+              entry.createdAt
+            ).toLocaleDateString()}
+            `;
+
+            listItem.appendChild(entryDetails);
+            entriesList.appendChild(listItem);
+          });
+        } catch (error) {
+          console.error('Fehler beim Laden der Zeiteinträge:', error);
+          alert('Fehler beim Laden der Zeiteinträge.');
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src * 'unsafe-inline'; img-src *;"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Max's Zeiterfassung</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100vh;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #1e90ff;
+      color: white;
+      height: 60px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    span#current-time {
+      font-size: 25px;
+    }
+
+    span#weekly-time {
+      font-size: 25px;
+    }
+
+    .header span:nth-child(2) {
+      font-size: 35px;
+      display: flex;
+      align-items: center;
+    }
+
+    .header img {
+      max-width: 50px;
+      max-height: 50px;
+      margin-right: 10px;
+      object-fit: contain;
+    }
+
+    .main {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-grow: 1;
+      padding: 20px;
+    }
+
+    .card {
+      flex: 1;
+      max-width: 300px;
+      height: 200px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      margin: 0 10px;
+      color: #fff;
+      font-weight: bold;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+
+    .card p {
+      font-size: 25px;
+    }
+
+    .active-orders {
+      background-color: #67e187;
+    }
+
+    .reports {
+      background-color: #7ee5dc;
+    }
+
+    .employee-data {
+      background-color: #62b1f6;
+    }
+
+    .card button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50px;
+      height: 50px;
+      background-color: #fff;
+      color: #000;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 24px;
+    }
+
+    .card button svg {
+      fill: #656565;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #b5b5b5;
+      color: black;
+      height: 60px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .footer span {
+      flex: 1;
+      text-align: center;
+    }
+
+    .footer button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      background-color: #d3d3d3;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 24px;
+    }
+
+    .footer span {
+      cursor: pointer;
+    }
+
+    .footer button svg {
+      fill: #656565;
+    }
+  </style>
+  <body>
+    <div class="header">
+      <span id="current-time">(Aktuelle Zeit)</span>
+      <span>(Firmenname) - Home</span>
+      <span id="weekly-time">(Wochenzeit)</span>
+    </div>
+    <div class="main">
+      <div class="card active-orders">
+        <p>Aktive Aufträge</p>
+        <p>(Anzahl)</p>
+        <button id="active-orders">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="35px"
+            viewBox="0 -960 960 960"
+            width="35px"
+            fill="#e8eaed"
+          >
+            <path
+              d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"
+            />
+          </svg>
+        </button>
+      </div>
+      <div class="card reports">
+        <p>Rapporte</p>
+        <p>(Anzahl)</p>
+        <button id="reports">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="35px"
+            viewBox="0 -960 960 960"
+            width="35px"
+            fill="#e8eaed"
+          >
+            <path
+              d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"
+            />
+          </svg>
+        </button>
+      </div>
+      <div class="card employee-data">
+        <p>Mitarbeiterdaten & Weiteres</p>
+        <p>(Name)</p>
+        <button id="employee-data">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="35px"
+            viewBox="0 -960 960 960"
+            width="35px"
+            fill="#e8eaed"
+          >
+            <path
+              d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span
+        onclick="window.zt.openExternal('https://www.gnu.org/licenses/gpl-3.0.html')"
+        >GNU GENERAL PUBLIC LICENSE</span
+      >
+      <span onclick="window.zt.openExternal('https://github.com/vaqqq/VA')"
+        >Repository Link</span
+      >
+      <span>Vertiefungsarbeit 2025 an der BBZH</span>
+      <button>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="30px"
+          viewBox="0 -960 960 960"
+          width="30px"
+          fill="#e8eaed"
+        >
+          <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
+        </svg>
+      </button>
+    </div>
+    <script>
+      const employeeButton = document.getElementById('employee-data');
+      const orderButton = document.getElementById('active-orders');
+      const timeButton = document.getElementById('reports');
+
+      employeeButton.addEventListener('click', () => {
+        window.zt.employeeWindow();
+      });
+
+      orderButton.addEventListener('click', () => {
+        window.zt.orderWindow();
+      });
+
+      timeButton.addEventListener('click', () => {
+        window.zt.timeWindow();
+      });
+
+      function updateTime() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString();
+        document.getElementById('current-time').textContent = timeString;
+      }
+
+      updateTime();
+      setInterval(updateTime, 1000);
+    </script>
+  </body>
+</html>

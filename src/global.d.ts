@@ -1,2 +1,15 @@
 declare let MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 declare let MAIN_WINDOW_WEBPACK_ENTRY: string;
+
+declare let HOME_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+declare let HOME_WINDOW_WEBPACK_ENTRY: string;
+
+declare let EMPLOYEE_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+declare let EMPLOYEE_WINDOW_WEBPACK_ENTRY: string;
+
+declare let ORDER_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+declare let ORDER_WINDOW_WEBPACK_ENTRY: string;
+
+declare let TIME_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+declare let TIME_WINDOW_WEBPACK_ENTRY: string;
+

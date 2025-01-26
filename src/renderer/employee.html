@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mitarbeiterdaten & Admin Sektion</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        padding: 20px;
+        background-color: #f4f4f4;
+      }
+
+      .header {
+        background-color: #1e90ff;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .section {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
+      }
+
+      .section h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+        color: #333;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .form-group label {
+        font-size: 14px;
+        color: #555;
+      }
+
+      .form-group input {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+
+      .form-group button {
+        background-color: #67e187;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .form-group button:hover {
+        background-color: #56c06e;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">Mitarbeiterdaten & Verwaltung</div>
+
+    <div class="content">
+      <div class="section admin-section">
+        <h2>Benutzer hinzufügen</h2>
+        <div class="form-group">
+          <label for="username">Benutzername:</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="Benutzername eingeben"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Passwort:</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Passwort eingeben"
+          />
+        </div>
+        <button id="add-user">Benutzer hinzufügen</button>
+      </div>
+
+      <div class="section admin-section">
+        <h2>Auftrag erstellen</h2>
+        <div class="form-group">
+          <label for="project-title">Auftragsname:</label>
+          <input
+            type="text"
+            id="project-title"
+            placeholder="Auftragsname eingeben"
+          />
+        </div>
+        <div class="form-group">
+          <label for="commission-number">Kommissionsnummer:</label>
+          <input
+            type="text"
+            id="commission-number"
+            placeholder="Kommissionsnummer eingeben"
+          />
+        </div>
+        <button id="create-project">Auftrag erstellen</button>
+      </div>
+
+      <div class="section">
+        <h2>Zeiten zu Auftrag hinzufügen</h2>
+        <div class="form-group">
+          <label for="project-select">Auftrag auswählen:</label>
+          <select id="project-select">
+            <option value="">Bitte wählen</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="employee-name">Mitarbeitername:</label>
+          <input
+            type="text"
+            id="employee-name"
+            placeholder="Mitarbeitername eingeben"
+          />
+        </div>
+        <div class="form-group">
+          <label for="time-hours">Stunden:</label>
+          <input
+            type="number"
+            id="time-hours"
+            placeholder="Stunden eintragen"
+            min="0.5"
+            step="0.5"
+          />
+        </div>
+        <div class="form-group">
+          <label for="time-description">Beschreibung:</label>
+          <input
+            type="text"
+            id="time-description"
+            placeholder="Beschreibung einfügen"
+          />
+        </div>
+        <button id="add-time-entry">Zeiteintrag hinzufügen</button>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById('add-user')
+        .addEventListener('click', async () => {
+          const username = document.getElementById('username').value;
+          const password = document.getElementById('password').value;
+
+          if (!username || !password) {
+            alert('Bitte alle Felder ausfüllen.');
+            window.focus();
+
+            return;
+          }
+
+          try {
+            const result = await window.zt.addEmployee(username, password);
+            console.log(result);
+            alert(
+              result.success
+                ? 'Benutzer erfolgreich hinzugefügt!'
+                : result.message
+            );
+            window.focus();
+          } catch (error) {
+            console.error('Fehler beim Hinzufügen des Benutzers:', error);
+            alert('Kein Firmen-Admin.');
+            window.focus();
+          }
+        });
+
+      document
+        .getElementById('create-project')
+        .addEventListener('click', async () => {
+          const title = document.getElementById('project-title').value;
+          const commissionNumber =
+            document.getElementById('commission-number').value;
+
+          if (!title || !commissionNumber) {
+            alert('Bitte alle Felder ausfüllen.');
+            window.focus();
+            return;
+          }
+
+          try {
+            const result = await window.zt.createProject(
+              title,
+              commissionNumber
+            );
+            console.log(result);
+            alert(
+              result.success ? 'Projekt erfolgreich erstellt!' : result.message
+            );
+            window.focus();
+          } catch (error) {
+            console.error('Fehler beim Erstellen des Projekts:', error);
+            alert('Fehler beim Erstellen des Projekts.');
+            window.focus();
+          }
+        });
+
+      let projectsLoaded = false;
+      let cachedProjects = [];
+
+      async function loadProjects() {
+        if (projectsLoaded) return;
+
+        try {
+          const projects = await window.zt.getProjects();
+          cachedProjects = projects;
+          const projectSelect = document.getElementById('project-select');
+          projectSelect.innerHTML = '<option value="">Bitte wählen</option>';
+
+          projects.forEach((project) => {
+            const option = document.createElement('option');
+            option.value = project._id;
+            option.textContent = project.title;
+            projectSelect.appendChild(option);
+          });
+
+          projectsLoaded = true;
+        } catch (error) {
+          if (
+            confirm('Projekte konnten nicht geladen werden. Erneut versuchen?')
+          ) {
+            loadProjects();
+          }
+        }
+      }
+
+      const projectSelect = document.getElementById('project-select');
+      projectSelect.addEventListener('focus', loadProjects);
+
+      document
+        .getElementById('add-time-entry')
+        .addEventListener('click', async () => {
+          const projectId = document.getElementById('project-select').value;
+          const employee = document.getElementById('employee-name').value;
+          const hours = parseFloat(document.getElementById('time-hours').value);
+          const description = document.getElementById('time-description').value;
+
+          if (!projectId || !employee || !hours) {
+            alert('Bitte alle Pflichtfelder ausfüllen.');
+            return;
+          }
+
+          try {
+            const result = await window.zt.addTime(
+              projectId,
+              employee,
+              hours,
+              description
+            );
+            console.log(result);
+            alert(
+              result.success
+                ? 'Zeiteintrag erfolgreich hinzugefügt!'
+                : result.message
+            );
+          } catch (error) {
+            console.error('Fehler beim Hinzufügen des Zeiteintrags:', error);
+            alert('Fehler beim Hinzufügen des Zeiteintrags.');
+          }
+        });
+    </script>
+  </body>
+</html>

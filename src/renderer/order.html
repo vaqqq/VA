@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aktive Aufträge</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        padding: 20px;
+        background-color: #f4f4f4;
+      }
+
+      .header {
+        background-color: #1e90ff;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .section {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
+      }
+
+      .section h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+        color: #333;
+      }
+
+      .list-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 10px;
+      }
+
+      .list-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .list-item span {
+        font-size: 16px;
+        color: #333;
+      }
+
+      .list-item button {
+        background-color: #67e187;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .list-item button:hover {
+        background-color: #56c06e;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">Aktive Aufträge</div>
+
+    <div class="content">
+      <div class="section">
+        <h2>Liste der Aufträge</h2>
+        <div id="project-list"></div>
+      </div>
+    </div>
+
+    <script>
+      async function loadProjects() {
+        try {
+          const projects = await window.zt.getProjects();
+          const projectList = document.getElementById('project-list');
+          projectList.innerHTML = '';
+
+          if (projects.length === 0) {
+            projectList.innerHTML = '<p>Keine aktiven Aufträge gefunden.</p>';
+            return;
+          }
+
+          projects.forEach((project) => {
+            const listItem = document.createElement('div');
+            listItem.classList.add('list-item');
+
+            const projectDetails = document.createElement('span');
+            projectDetails.textContent = `${project.title} - ${project.commissionNumber}`;
+
+            const viewButton = document.createElement('button');
+            viewButton.textContent = 'Ansehen';
+            viewButton.addEventListener('click', () => {
+              alert(
+                `Details für Projekt: ${project.title}\nAuftragsnummer: ${project.commissionNumber}\nKunde: -\nStartdatum: -\nEnddatum: -`
+              );
+            });
+
+            listItem.appendChild(projectDetails);
+            listItem.appendChild(viewButton);
+            projectList.appendChild(listItem);
+          });
+        } catch (error) {
+          console.error('Fehler beim Laden der Aufträge:', error);
+          alert('Fehler beim Laden der Aufträge.');
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', loadProjects);
+    </script>
+  </body>
+</html>
