@@ -2,7 +2,7 @@
   "name": "zeiterfassung",
   "productName": "Max's Zeiterfassung",
   "version": "1.0.0",
-  "description": "The Krunker Client of enlightenment.",
+  "description": "Für die Vertiefungsarbeit 2025.",
   "main": "./.webpack/main",
   "author": "Vaq",
   "license": "GPL-3.0-only",
