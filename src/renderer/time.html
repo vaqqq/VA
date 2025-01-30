@@ -63,15 +63,6 @@
         font-size: 14px;
         color: #555;
       }
-
-      .footer {
-        background-color: #b5b5b5;
-        padding: 10px;
-        border-radius: 10px;
-        font-size: 14px;
-        text-align: center;
-        margin-top: 20px;
-      }
     </style>
   </head>
   <body>
@@ -86,11 +77,8 @@
       </div>
     </div>
 
-    <div class="footer">© 2025 Zeiterfassung</div>
-
     <script>
-      document.addEventListener('DOMContentLoaded', loadTimeEntries);
-
+      loadTimeEntries();
       async function loadTimeEntries() {
         try {
           const timeEntries = await window.zt.getTimeEntries();
